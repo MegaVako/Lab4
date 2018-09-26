@@ -89,8 +89,19 @@ public class Colosseum {
      * <p>
      * Implement this function.
      */
-    public static void printWhoIsAhead() {
-        System.out.println("Implement me!");
+    public static void printWhoIsAhead(Pokemon p1, Pokemon p2) {
+        System.out.println("");
+        System.out.println(p1.name + " has " + p1.hitPoints + " hit points");
+        System.out.println(p2.name + " has " + p2.hitPoints + " hit points");
+        System.out.println("");
+        if (p1.hitPoints > p2.hitPoints) {
+            System.out.println(p1.name + " is currently ahead!");
+        } else if (p1.hitPoints < p2.hitPoints) {
+            System.out.println(p2.name + " is currently ahead!");
+        } else {
+            System.out.println("Tie");
+        }
+        System.out.println("");
     }
 
     /**
@@ -146,6 +157,8 @@ public class Colosseum {
              */
             System.out.print("second");
             Pokemon tempPokemon = new Pokemon();
+
+            //flip side
             tempPokemon = firstPokemon;
             firstPokemon = secondPokemon;
             secondPokemon = tempPokemon;
@@ -160,6 +173,26 @@ public class Colosseum {
      */
     public static void main(final String[] unused) {
         myScan = new Scanner(System.in);
+        System.out.println("Please name your Pokemon (player 1)");
+        String inputName = myScan.nextLine();
+
+        System.out.println("How many hit points will it have? (1-50) ");
+        int inputHp = 0;
+        boolean stepOne = false;
+        while (!stepOne) {
+            try {
+                inputHp = Integer.parseInt(myScan.nextLine());
+            } catch (Exception NumberFormatException) {
+                System.out.println("Incorrect input");
+            }
+            if (inputHp > MAX_HIT_POINTS || inputHp <= 0 ) {
+                System.out.println("HP not in bound");
+                System.out.println("Please enter a number from 1 to 50");
+            }
+        }
+        int attackLevel = 0;
+        int defenseLeve = 0;
+
         initializePokemon();
         determineOrder();
         System.out.println("");
@@ -177,9 +210,8 @@ public class Colosseum {
             if (!ifWinner) {
                 ifWinner = secondPokemon.attack(firstPokemon);
                 if (!ifWinner) {
-                    printWhoIsAhead();
+                    printWhoIsAhead(firstPokemon, secondPokemon);
                 }
-
             }
         }
         System.out.println("");
